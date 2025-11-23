@@ -12,7 +12,7 @@ KEIL MICRO VISION 4.0 IDE
 
 # PROCEDURE:
 
-
+```
 ⮚	Open the Keil software and select the New uvision project from Project Menu as shown below.
 ⮚	Browse to your project folder and provide the project name and click on save.
 ⮚	Once the project is saved a new pop up “Select Device for Target” opens, Select the controller (NXP: LPC1768) from NXP (founded by philips) and click on OK.
@@ -33,7 +33,7 @@ Command: fromelf --bin projectname.axf --output filename.bin
 ⮚	in c/c++ → include paths → desktop (00-libfiles).
 ⮚	.Bin file is generated after a rebuild.
 ⮚	Check the project folder for the generated .Bin file.
-
+```
 # ADD FILES:
 Target1:
 Source group1:
@@ -42,17 +42,45 @@ Header:
 Delay.h, stdutils.h, gpioi.h
 
 # PIN DIAGRAM :
- 
 
-# CIRCUIT DIAGRAM:
+<img width="464" height="241" alt="image" src="https://github.com/user-attachments/assets/303cf282-6c03-48a7-92da-4a15611a0c09" />
+
+```
+P1[23]/MCFB1/PWM1[4]/MISO0 37[1]
+I/OP1 [23] — General purpose digital input/output
+I MCFB1	— Motor control PWM channel 1,Encoder Interface PHB input.
+O PWM1 [4] — Pulse Width Modulator 1, channel 4 outputs.
+I/O MISO 0 — Master In Slave Out for SSP0.
+```
  
+# CIRCUIT DIAGRAM:
+
+ <img width="622" height="306" alt="image" src="https://github.com/user-attachments/assets/e1898913-d911-4506-bb8b-64322264389e" />
+
  
 # PROGRAM:
+```
+#include <lpc17xx.h>
+#include "delay.h"	//User defined library which conatins the delay routines #include "gpio.h"
+#define LED P1_29	// Led is connected to P1.29
+/* start the main program */ int main()
+{
+SystemInit();	//Clock and PLL configuration GPIO_PinFunction(LED,PINSEL_FUNC_0); // Configure Pin for Gpio GPIO_PinDirection(LED,OUTPUT);	// Configure the pin as OUTPUT GPIO_PinWrite(LED,LOW);
+while(1)
+{
+/* Turn On all the leds and wait for 100ms */ GPIO_PinWrite(LED,HIGH);	// Make all the Port pin as high DELAY_ms(100);
 
-
+GPIO_PinWrite(LED,LOW);	// Make all the Port pin as low DELAY_ms(100);
+}
+}
+```
  
 # Output:
 
+<img width="642" height="466" alt="image" src="https://github.com/user-attachments/assets/dd35d08d-44e4-4c77-89d1-7bde023f1dc4" />
+
+# Result:
+Thus a LED is interfaced with ARM LPC1768 microprocessor and its blinking was verified successfully.
 
 
 
